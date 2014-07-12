@@ -16,8 +16,9 @@ private:
   int* wall_width;
   int* no_layers;
   float e_coef;
+  Printhead* ph;
   std::vector<std::string> commands;
   void appendFile(std::ofstream *output, const char* filename);
   void writeToFile();
-
+  
 };

@@ -1,13 +1,27 @@
 #include "circle_slice.h"
 
-CircleSlice::CircleSlice(std::vector<std::string>* commands, float x_center, float y_center, float radius, float t_interval)
+CircleSlice::CircleSlice(
+    Printhead* ph,
+    std::vector<std::string>* cmds,
+    float x_c, 
+    float y_c, 
+    float r, 
+    float t_int)
 {
   std::cout << "Slice \n";
+  _ph = ph;
+  commands = cmds;
+  x_center = x_c;
+  y_center = y_c;
+  radius = r;
+  t_interval = t_int;
 }
 
 void CircleSlice::generateOuterWall(int* width)
 {
-  //
+  for(int* i = 0; i < width; i++){
+    //
+  }
 }
 
 void CircleSlice::addCommand(float x, float y, float e = 0.0, float z = 0.0)

@@ -7,6 +7,7 @@ Gcode::Gcode(const char *filename, float ratio, int *width, int *layers)
   wall_width = width;
   no_layers = layers;
   e_coef = 0.0329;
+  ph = new Printhead();
 }
 
 bool Gcode::generate()
@@ -16,7 +17,7 @@ bool Gcode::generate()
 
   for(int* i = 0; i < no_layers; i++)
   {
-    CircleSlice cs = CircleSlice(&commands, 100.0, 100.0, r, 0.5);
+    CircleSlice cs = CircleSlice(ph, &commands, 100.0, 100.0, r, 0.5);
     cs.generateOuterWall(wall_width);
     r = r * inc_ratio;
   }
