@@ -13,7 +13,14 @@ Gcode::Gcode(const char *filename, double ratio, int width, int layers)
 bool Gcode::generate()
 {
   std::cout << "Generating gcode...\n";
-  double r = 10.0;
+  double r = 20.0;
+
+  for(int i = 0; i < 4; i++)
+  {
+    std::cout << "Raft " << i << "\n";
+    RaftSlice rs = RafeSlice(ph, 100, 100, 40.0, wall_width);
+    rs.generate();
+  }
 
   for(int i = 0; i < no_layers; i++)
   {

@@ -6,7 +6,7 @@
 
 class CircleSlice{
 public:
-  CircleSlice(Printhead* ph, float x_center, float y_center, float radius, float t_interval);
+  CircleSlice(Printhead* ph, float x_c, float y_c, float radius, float t_interval);
   void generateOuterWall(int width);
 private:
   Printhead* _ph;
@@ -15,7 +15,6 @@ private:
   float y_center;
   float radius;
   float t_interval;
-  void addCommand(float x, float y, float e, float z);
   int CIRCLE_POINTS;
   float FILAMENT_WIDTH;
 };
