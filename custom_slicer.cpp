@@ -7,10 +7,10 @@ int main(int argc, const char* argv[]){
   else
   {
     const char* filename = argv[1];
-    float inc_ratio = atoi(argv[2]);
+    double inc_ratio = atof(argv[2]);
     int wall_width = atoi(argv[3]);
     int no_layers = atoi(argv[4]);
-    Gcode g = Gcode(filename, inc_ratio, &wall_width, &no_layers);
+    Gcode g = Gcode(filename, inc_ratio, wall_width, no_layers);
     g.generate();
   }
 }

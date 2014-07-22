@@ -1,25 +1,28 @@
 #include "gcode.h"
 
-Gcode::Gcode(const char *filename, float ratio, int *width, int *layers)
+Gcode::Gcode(const char *filename, double ratio, int width, int layers)
 {
   shape_filename = filename;
   inc_ratio = ratio;
   wall_width = width;
   no_layers = layers;
   e_coef = 0.0329;
-  ph = new Printhead();
+  ph = new Printhead(&commands);
 }
 
 bool Gcode::generate()
 {
   std::cout << "Generating gcode...\n";
-  float r = 10.0f;
+  double r = 10.0;
 
-  for(int* i = 0; i < no_layers; i++)
+  for(int i = 0; i < no_layers; i++)
   {
-    CircleSlice cs = CircleSlice(ph, &commands, 100.0, 100.0, r, 0.5);
+    std::cout << "Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, 100.0, 100.0, r, 0.06283185);
     cs.generateOuterWall(wall_width);
-    r = r * inc_ratio;
+    // THIS ALSO LOOKS COOL r = r * inc_ratio;
+    r = r + inc_ratio;
+    std::cout << "Ratio " << r << "\n";
   }
   writeToFile();
   return true;

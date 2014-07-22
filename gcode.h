@@ -7,14 +7,14 @@
 class Gcode
 {
 public:
-  Gcode(const char *filename, float inc_ratio, int *wall_width, int *no_layers);
+  Gcode(const char *filename, double inc_ratio, int wall_width, int no_layers);
   bool generate();
 
 private:
   const char* shape_filename;
-  float inc_ratio;
-  int* wall_width;
-  int* no_layers;
+  double inc_ratio;
+  int wall_width;
+  int no_layers;
   float e_coef;
   Printhead* ph;
   std::vector<std::string> commands;
