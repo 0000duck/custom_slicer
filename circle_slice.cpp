@@ -23,6 +23,12 @@ void CircleSlice::generateOuterWall(int width)
 {
   //std::cout << "Generate OuterWall \n";
   //_ph->extrudeXYAxisTo(x_center, y_center);
+  //
+
+  //TODO FIX THIS HACK how much should it decrease by
+  float line_width = 0.1;
+  //radius -= line_width * width;
+
   for(int i = 0; i < width; i++){
     double t = 0.0;
     double x = x_center + radius * cos(6.2832);
@@ -38,7 +44,7 @@ void CircleSlice::generateOuterWall(int width)
       _ph->extrudeXYAxisTo(x, y);
     }
     //TODO FIX THIS HACK how much should it decrease by
-    radius -= 0.1;
+    radius -= line_width;
     x -= FILAMENT_WIDTH;
    //_ph->extrudeXYAxisTo(x, y);
   }

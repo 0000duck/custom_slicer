@@ -10,13 +10,16 @@ Printhead::Printhead(std::vector<std::string>* commands)
   _x = 0.0;
   _e = 0.0;
   _commands = commands;
+  E_COEF = 0.0329;
+
 }
 
 void Printhead::extrudeXYAxisTo(float x, float y)
 {
+  float d = sqrt(pow((_x - x), 2) + pow((_y - y), 2));
   _x = x;
   _y = y;
-  _e += 0.5;
+  _e += (d * E_COEF);
   std::stringstream ss;
   ss << "G1 F1200 X" << _x << " Y" << _y << " E" << _e << "\n";
   std::string s = ss.str();
@@ -26,10 +29,12 @@ void Printhead::extrudeXYAxisTo(float x, float y)
 
 void Printhead::extrudeXYZAxisTo(float x, float y, float z)
 {
+  
+  float d = sqrt(pow((_x - x), 2) + pow((_y - y), 2));
   _x = x;
   _y = y;
   _z = z;
-  _e += 0.5;
+  _e += (d * E_COEF);
   std::stringstream ss;
   ss << "G1 F1200 X" << _x << " Y" << _y << " Z" << _z  << " E" << _e << "\n";
   std::string s = ss.str();
@@ -49,9 +54,10 @@ void Printhead::moveAlongXYAxis(float x, float y)
 
 void Printhead::extrudeAlongXYAxis(float x, float y)
 {
+  float d = sqrt(pow(x, 2) + pow(y,2));
   _x += x;
   _y += y;
-  _e += 0.5;
+  _e += (d * E_COEF);
   std::stringstream ss;
   ss << "G1 F1200 X" << _x << " Y" << _y << " E" << _e << "\n";
   std::string s = ss.str();

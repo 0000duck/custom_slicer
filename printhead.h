@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <math.h>
 
 class Printhead
 {
@@ -19,6 +20,7 @@ private:
   float _y;
   float _z;
   float _e;
+  float E_COEF;
   std::vector<std::string>* _commands;
 
 };

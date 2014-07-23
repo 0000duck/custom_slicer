@@ -18,16 +18,16 @@ bool Gcode::generate()
 
   std::cout << "Skirt \n";
   commands.push_back(";SKIRT\n");
-  RaftSlice skirt = RaftSlice(ph, 100, 100, 70.0, 5);
+  RaftSlice skirt = RaftSlice(ph, 100, 100, 50.0, 8);
   skirt.moveToStartZ();
   skirt.generateOuterWall();
 
-  for(int i = 0; i < 4; i++)
-  {
-    std::cout << "Raft Layer" << i << "\n";
-    RaftSlice rs = RaftSlice(ph, 100, 100, 50.0, wall_width);
-    rs.generate();
-  }
+  //for(int i = 0; i < 1; i++)
+  //{
+    //std::cout << "Raft Layer" << i << "\n";
+    //RaftSlice rs = RaftSlice(ph, 100, 100, 25.0, wall_width);
+    //rs.generate();
+  //}
 
   for(int i = 0; i < no_layers; i++)
   {
