@@ -8,7 +8,7 @@ CircleSlice::CircleSlice(
     float r, 
     float t_int)
 {
-  std::cout << "Slice radius " << radius << "\n";
+  //std::cout << "Slice radius " << radius << "\n";
   _ph = ph;
   //commands = cmds;
   x_center = x_c;
@@ -16,31 +16,31 @@ CircleSlice::CircleSlice(
   radius = r;
   t_interval = t_int;
   CIRCLE_POINTS = 100;
-  FILAMENT_WIDTH = 0.4;
+  FILAMENT_WIDTH = 0.4f;
 }
 
 void CircleSlice::generateOuterWall(int width)
 {
-  std::cout << "Generate OuterWall \n";
-  //_ph->moveXYAxisTo(x_center, y_center);
+  //std::cout << "Generate OuterWall \n";
+  //_ph->extrudeXYAxisTo(x_center, y_center);
   for(int i = 0; i < width; i++){
     double t = 0.0;
     double x = x_center + radius * cos(6.2832);
     double y = y_center + radius * sin(6.2832);
-    _ph->moveXYAxisTo(x, y);
+    _ph->extrudeXYAxisTo(x, y);
     for(int j=0; j<=CIRCLE_POINTS; j++)
     {
-      std::cout << radius << "\n";
+      //std::cout << radius << "\n";
       x = x_center + radius * cos(t);
       y = y_center + radius * sin(t);
       t += t_interval;
       // TODO Calculate E
-      _ph->moveXYAxisTo(x, y);
+      _ph->extrudeXYAxisTo(x, y);
     }
     //TODO FIX THIS HACK how much should it decrease by
     radius -= 0.1;
     x -= FILAMENT_WIDTH;
-   //_ph->moveXYAxisTo(x, y);
+   //_ph->extrudeXYAxisTo(x, y);
   }
   _ph->moveZAxis(FILAMENT_WIDTH);
 }

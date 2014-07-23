@@ -1,3 +1,6 @@
+#if !defined( PRINTHEAD_H )
+#define PRINTHEAD_H
+
 #include <vector>
 #include <sstream>
 #include <string>
@@ -6,7 +9,10 @@ class Printhead
 {
 public:
   Printhead(std::vector<std::string>* commands);
-  void moveXYAxisTo(float x, float y);
+  void extrudeXYAxisTo(float x, float y);
+  void extrudeXYZAxisTo(float x, float y, float z);
+  void moveAlongXYAxis(float x, float y);
+  void extrudeAlongXYAxis(float x, float y);
   void moveZAxis(float height);
 private:
   float _x;
@@ -16,3 +22,5 @@ private:
   std::vector<std::string>* _commands;
 
 };
+
+#endif

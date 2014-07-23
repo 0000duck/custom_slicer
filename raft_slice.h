@@ -1,18 +1,15 @@
 #include <iostream>
-#include <vector>
-#include <string>
-#include "printhead.cpp"
-#include <math.h>
+#include "slice.h"
 
-class RaftSlice{
+class RaftSlice : public Slice{
 public:
   RaftSlice(Printhead* ph, float x_c, float y_c, float width, int wall_width);
   void generateOuterWall();
   void generateFill();
   void generate();
+  void moveToStart();
+  void moveToStartZ();
 private:
-  Printhead* _ph;
-  std::vector<std::string>* commands;
   float x_center;
   float y_center;
   float _width;

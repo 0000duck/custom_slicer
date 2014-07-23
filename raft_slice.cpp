@@ -13,24 +13,53 @@ RaftSlice::RaftSlice(
   y_center = y_c;
   _width = width;
   _wall_width = wall_width;
+  FILAMENT_WIDTH = 0.4f;
 }
 
 void RaftSlice::generate()
 {
+  moveToStart();
   generateOuterWall();
-  generateOuterWall();
-  _ph->moveZAxis(0.4);
+  generateFill();
+  _ph->moveZAxis(0.1);
 }
+
+void RaftSlice::moveToStart()
+{
+  double x = x_center + (_width / 2);
+  double y = y_center - (_width / 2);
+  _ph->extrudeXYAxisTo(x, y);
+}
+
+void RaftSlice::moveToStartZ()
+{
+  double x = x_center + (_width / 2);
+  double y = y_center - (_width / 2);
+  _ph->extrudeXYZAxisTo(x, y, 0.1);
+}
+
 
 void RaftSlice::generateOuterWall()
 {
   for(int i = 0; i < _wall_width; i++)
   {
-    //
+    _ph->extrudeAlongXYAxis(0.0, _width);
+    _ph->extrudeAlongXYAxis(-_width, 0.0);
+    _ph->extrudeAlongXYAxis(0.0, -_width);
+    _ph->extrudeAlongXYAxis(_width, 0.0);
+    _ph->moveAlongXYAxis(-FILAMENT_WIDTH, FILAMENT_WIDTH);
+    _width -= (FILAMENT_WIDTH * 2);
   }
 }
 
 void RaftSlice::generateFill()
 {
-
+  int line_count = (_width / FILAMENT_WIDTH) / 2;
+  for(int i = 0; i <= line_count; i++)
+  {
+    _ph->extrudeAlongXYAxis(0.0, _width);
+    _ph->moveAlongXYAxis(-FILAMENT_WIDTH, 0.0);
+    _ph->extrudeAlongXYAxis(0.0, -_width);
+    _ph->moveAlongXYAxis(-FILAMENT_WIDTH, 0.0);
+  }
 }

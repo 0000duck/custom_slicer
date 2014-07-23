@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include "circle_slice.cpp"
+#include "raft_slice.cpp"
 
 class Gcode
 {
@@ -20,5 +21,4 @@ private:
   std::vector<std::string> commands;
   void appendFile(std::ofstream *output, const char* filename);
   void writeToFile();
-  
 };
