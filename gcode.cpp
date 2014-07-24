@@ -6,7 +6,8 @@ Gcode::Gcode(const char *filename, double ratio, int width, int layers)
   inc_ratio = ratio;
   wall_width = width;
   no_layers = layers;
-  e_coef = 0.0329;
+  //TODO FIX THIS HACK
+  e_coef = 0.0229;
   commands.reserve(50000);
   ph = new Printhead(&commands);
 }
@@ -39,6 +40,18 @@ bool Gcode::generate()
     r = r + inc_ratio;
     //std::cout << "Ratio " << r << "\n";
   }
+
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, 100.0, 100.0, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r - inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
   writeToFile();
   return true;
 }
