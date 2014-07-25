@@ -10,8 +10,9 @@ Printhead::Printhead(std::vector<std::string>* commands)
   _x = 0.0;
   _e = 0.0;
   _commands = commands;
-  E_COEF = 0.0329;
-
+  //E_COEF = 0.0329;
+  LAYER_HEIGHT = 0.1;
+  LINE_WIDTH = 0.1;
 }
 
 void Printhead::extrudeXYAxisTo(float x, float y)
@@ -19,7 +20,7 @@ void Printhead::extrudeXYAxisTo(float x, float y)
   float d = sqrt(pow((_x - x), 2) + pow((_y - y), 2));
   _x = x;
   _y = y;
-  _e += (d * E_COEF);
+  _e += (d * LAYER_HEIGHT * LINE_WIDTH);
   std::stringstream ss;
   ss << "G1 F3000 X" << _x << " Y" << _y << " E" << _e << "\n";
   std::string s = ss.str();
@@ -29,7 +30,7 @@ void Printhead::extrudeXYAxisTo(float x, float y)
 
 void Printhead::extrudeXYZAxisTo(float x, float y, float z)
 {
-  
+
   float d = sqrt(pow((_x - x), 2) + pow((_y - y), 2));
   _x = x;
   _y = y;
@@ -38,7 +39,7 @@ void Printhead::extrudeXYZAxisTo(float x, float y, float z)
   // extrusionPerMM = double(layerThickness) / 1000.0; this is really just 0.1
   // extrusionAmount += extrusionPerMM * double(lineWidth) / 1000.0 * vSizeMM(diff);
   // _e += 
-  _e += (d * E_COEF);
+  _e += (d * LAYER_HEIGHT * LINE_WIDTH);
   std::stringstream ss;
   ss << "G1 F3000 X" << _x << " Y" << _y << " Z" << _z  << " E" << _e << "\n";
   std::string s = ss.str();
@@ -61,16 +62,16 @@ void Printhead::extrudeAlongXYAxis(float x, float y)
   float d = sqrt(pow(x, 2) + pow(y,2));
   _x += x;
   _y += y;
-  _e += (d * E_COEF);
+  _e += (d * LAYER_HEIGHT * LINE_WIDTH);
   std::stringstream ss;
   ss << "G1 F3000 X" << _x << " Y" << _y << " E" << _e << "\n";
   std::string s = ss.str();
   _commands->push_back(s);
 }
 
-void Printhead::moveZAxis(float height)
+void Printhead::moveZAxis()
 {
-  _z += height;
+  _z += LAYER_HEIGHT;
   std::stringstream ss;
   ss << ";NEWLAYER\nG1 F1200 X" << _x << " Y" << _y << " Z" << _z << "\n";
   std::string s = ss.str();

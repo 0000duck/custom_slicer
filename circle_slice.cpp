@@ -16,7 +16,8 @@ CircleSlice::CircleSlice(
   radius = r;
   t_interval = t_int;
   CIRCLE_POINTS = 100;
-  FILAMENT_WIDTH = 0.4f;
+  LINE_WIDTH = 0.1f;
+  LAYER_HEIGHT = 0.1f;
 }
 
 void CircleSlice::generateOuterWall(int width)
@@ -25,8 +26,6 @@ void CircleSlice::generateOuterWall(int width)
   //_ph->extrudeXYAxisTo(x_center, y_center);
   //
 
-  //TODO FIX THIS HACK how much should it decrease by
-  float line_width = 0.1;
   //radius -= line_width * width;
 
   for(int i = 0; i < width; i++){
@@ -40,15 +39,14 @@ void CircleSlice::generateOuterWall(int width)
       x = x_center + radius * cos(t);
       y = y_center + radius * sin(t);
       t += t_interval;
-      // TODO Calculate E
       _ph->extrudeXYAxisTo(x, y);
     }
     //TODO FIX THIS HACK how much should it decrease by
-    radius -= line_width;
-    x -= FILAMENT_WIDTH;
+    radius -= LINE_WIDTH;
+    x -= LINE_WIDTH;
    //_ph->extrudeXYAxisTo(x, y);
   }
-  _ph->moveZAxis(FILAMENT_WIDTH);
+  _ph->moveZAxis();
 }
 
 //void CircleSlice::addCommand(float x, float y, float e = 0.0, float z = 0.0)

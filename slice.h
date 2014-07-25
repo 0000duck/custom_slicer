@@ -12,7 +12,8 @@ class Slice
 protected:
   Printhead* _ph;
   std::vector<std::string>* commands;
-  float FILAMENT_WIDTH;
+  float LINE_WIDTH;
+  float LAYER_HEIGHT;
 
 };
 
