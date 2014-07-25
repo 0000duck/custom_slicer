@@ -16,7 +16,7 @@ CircleSlice::CircleSlice(
   radius = r;
   t_interval = t_int;
   CIRCLE_POINTS = 100;
-  LINE_WIDTH = 0.1f;
+  LINE_WIDTH = 0.3f;
   LAYER_HEIGHT = 0.1f;
 }
 

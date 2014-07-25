@@ -13,7 +13,7 @@ RaftSlice::RaftSlice(
   y_center = y_c;
   _width = width;
   _wall_width = wall_width;
-  LINE_WIDTH = 0.1f;
+  LINE_WIDTH = 0.3f;
   LAYER_HEIGHT = 0.1f;
 }
 
