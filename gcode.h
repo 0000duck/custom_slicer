@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include "circle_slice.cpp"
+#include "oval_slice.cpp"
 #include "raft_slice.cpp"
 
 class Gcode

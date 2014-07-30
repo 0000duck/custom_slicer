@@ -33,7 +33,7 @@ bool Gcode::generate()
   for(int i = 0; i < no_layers; i++)
   {
     std::cout << "Cone Layer " << i << "\n";
-    CircleSlice cs = CircleSlice(ph, 100.0, 100.0, r, 0.06283185);
+    OvalSlice cs = OvalSlice(ph, 100.0, 100.0, r, 0.06283185);
     cs.generateOuterWall(wall_width);
     // THIS ALSO LOOKS COOL 
     //r = r * inc_ratio;
@@ -41,16 +41,16 @@ bool Gcode::generate()
     //std::cout << "Ratio " << r << "\n";
   }
 
-  for(int i = 0; i < no_layers; i++)
-  {
-    std::cout << "Cone Layer " << i << "\n";
-    CircleSlice cs = CircleSlice(ph, 100.0, 100.0, r, 0.06283185);
-    cs.generateOuterWall(wall_width);
-    // THIS ALSO LOOKS COOL 
-    //r = r * inc_ratio;
-    r = r - inc_ratio;
-    //std::cout << "Ratio " << r << "\n";
-  }
+  //for(int i = 0; i < no_layers; i++)
+  //{
+    //std::cout << "Cone Layer " << i << "\n";
+    //CircleSlice cs = CircleSlice(ph, 100.0, 100.0, r, 0.06283185);
+    //cs.generateOuterWall(wall_width);
+    //// THIS ALSO LOOKS COOL 
+    ////r = r * inc_ratio;
+    //r = r - inc_ratio;
+    ////std::cout << "Ratio " << r << "\n";
+  //}
 
   writeToFile();
   return true;
