@@ -26,7 +26,7 @@ void CircleSlice::generateOuterWall(int width)
   //_ph->extrudeXYAxisTo(x_center, y_center);
   //
 
-  //radius -= line_width * width;
+  radius -= LINE_WIDTH * width;
 
   for(int i = 0; i < width; i++){
     double t = 0.0;
@@ -42,8 +42,8 @@ void CircleSlice::generateOuterWall(int width)
       _ph->extrudeXYAxisTo(x, y);
     }
     //TODO FIX THIS HACK how much should it decrease by
-    radius -= LINE_WIDTH;
-    x -= LINE_WIDTH;
+    radius += LINE_WIDTH;
+    x += LINE_WIDTH;
    //_ph->extrudeXYAxisTo(x, y);
   }
   _ph->moveZAxis();

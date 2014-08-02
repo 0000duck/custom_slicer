@@ -8,32 +8,37 @@ Gcode::Gcode(const char *filename, double ratio, int width, int layers)
   no_layers = layers;
   //TODO FIX THIS HACK
   e_coef = 0.0229;
-  commands.reserve(50000);
+  commands.reserve(500000);
   ph = new Printhead(&commands);
 }
 
 bool Gcode::generate()
 {
   std::cout << "Generating gcode...\n";
-  double r = 20.0;
+  
 
+  float left = 40.0f;
+  float center_h = 115.0f;
+  float right = 185.0f;
+
+  float top = 180.0f;
+  float center_v = 115.0f;
+  float bottom = 45.0f;
+
+
+  // WALL WIDTH 2
+  wall_width = 2;
+  double r = 30.0;
   std::cout << "Skirt \n";
   commands.push_back(";SKIRT\n");
-  RaftSlice skirt = RaftSlice(ph, 100, 100, 50.0, 8);
+  RaftSlice skirt = RaftSlice(ph, left, top, 70.0, 8);
   skirt.moveToStartZ();
   skirt.generateOuterWall();
-
-  //for(int i = 0; i < 1; i++)
-  //{
-    //std::cout << "Raft Layer" << i << "\n";
-    //RaftSlice rs = RaftSlice(ph, 100, 100, 25.0, wall_width);
-    //rs.generate();
-  //}
 
   for(int i = 0; i < no_layers; i++)
   {
     std::cout << "Cone Layer " << i << "\n";
-    OvalSlice cs = OvalSlice(ph, 100.0, 100.0, r, 0.06283185);
+    CircleSlice cs = CircleSlice(ph, left, top, r, 0.06283185);
     cs.generateOuterWall(wall_width);
     // THIS ALSO LOOKS COOL 
     //r = r * inc_ratio;
@@ -41,16 +46,155 @@ bool Gcode::generate()
     //std::cout << "Ratio " << r << "\n";
   }
 
-  //for(int i = 0; i < no_layers; i++)
-  //{
-    //std::cout << "Cone Layer " << i << "\n";
-    //CircleSlice cs = CircleSlice(ph, 100.0, 100.0, r, 0.06283185);
-    //cs.generateOuterWall(wall_width);
-    //// THIS ALSO LOOKS COOL 
-    ////r = r * inc_ratio;
-    //r = r - inc_ratio;
-    ////std::cout << "Ratio " << r << "\n";
-  //}
+  r = 20.0;
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt2 = RaftSlice(ph, center_h, top, 50.0, 8);
+  skirt2.moveToStartZ();
+  skirt2.generateOuterWall();
+
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, center_h, top, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+  r = 10.0;
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt3 = RaftSlice(ph, right, top, 30.0, 8);
+  skirt3.moveToStartZ();
+  skirt3.generateOuterWall();
+
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, right, top, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+
+
+
+  // WALL WIDTH 4
+  wall_width = 4;
+  r = 30.0;
+  std::cout << "Skirt \n";
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt4 = RaftSlice(ph, left, center_v, 70.0, 8);
+  skirt4.moveToStartZ();
+  skirt4.generateOuterWall();
+
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, left, center_v, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+  r = 20.0;
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt5 = RaftSlice(ph, center_h, center_v, 50.0, 2);
+  skirt5.moveToStartZ();
+  skirt5.generateOuterWall();
+
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, center_h, center_v, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+  r = 10.0;
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt6 = RaftSlice(ph, right, center_v, 30.0, 8);
+  skirt6.moveToStartZ();
+  skirt6.generateOuterWall();
+
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, right, center_v, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+
+
+  // WALL WIDTH 6
+  wall_width = 6;
+  r = 30.0;
+  //std::cout << "Skirt \n";
+  //commands.push_back(";SKIRT\n");
+  //RaftSlice skirt7 = RaftSlice(ph, left, bottom, 70.0, 2);
+  //skirt7.moveToStartZ();
+  //skirt7.generateOuterWall();
+
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, left, bottom, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+  r = 20.0;
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt8 = RaftSlice(ph, center_h, bottom, 50.0, 8);
+  skirt8.moveToStartZ();
+  skirt8.generateOuterWall();
+
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, center_h, bottom, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+  r = 10.0;
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt9 = RaftSlice(ph, right, bottom, 30.0, 8);
+  skirt9.moveToStartZ();
+  skirt9.generateOuterWall();
+
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, right, bottom, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+
+
 
   writeToFile();
   return true;
@@ -75,13 +219,12 @@ void Gcode::writeToFile()
   std::ofstream output;
   output.open ("../gcode/output.gcode");
 
-  appendFile(&output, "../gcode/start_gcode.txt");
+  appendFile(&output, "../gcode/start_gcode_um2.txt");
 
   for (std::vector<std::string>::iterator it = commands.begin() ; it != commands.end(); ++it)
     output << *it;
 
-  appendFile(&output, "../gcode/end_gcode.txt");
+  appendFile(&output, "../gcode/end_gcode_um2.txt");
 
   output.close();
 }
-
