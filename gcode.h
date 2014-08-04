@@ -5,6 +5,7 @@
 #include "circle_slice.cpp"
 #include "oval_slice.cpp"
 #include "raft_slice.cpp"
+#include "rectangle_slice.cpp"
 
 class Gcode
 {
