@@ -59,7 +59,7 @@ void Printhead::moveAlongXYAxis(float x, float y)
 
 void Printhead::extrudeAlongXYAxis(float x, float y)
 {
-  float d = sqrt(pow(x, 2) + pow(y,2));
+  float d = sqrt(pow((_x - x), 2) + pow((_y - y), 2));
   _x += x;
   _y += y;
   _e += (d * LAYER_HEIGHT * LINE_WIDTH);

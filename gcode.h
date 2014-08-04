@@ -23,4 +23,6 @@ private:
   std::vector<std::string> commands;
   void appendFile(std::ofstream *output, const char* filename);
   void writeToFile();
+  void rectangles();
+  void cylinderFixes();
 };

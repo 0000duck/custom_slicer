@@ -15,83 +15,8 @@ Gcode::Gcode(const char *filename, double ratio, int width, int layers)
 bool Gcode::generate()
 {
   std::cout << "Generating gcode...\n";
-  
-
-  float left = 40.0f;
-  float center_h = 115.0f;
-  float right = 180.0f;
-
-  float top = 180.0f;
-  float center_v = 115.0f;
-  float bottom = 55.0f;
-
-
-   inc_ratio = 0;
-
-  // WALL WIDTH 4
-  wall_width = 4;
-  std::cout << "Skirt \n";
-  commands.push_back(";SKIRT\n");
-  RaftSlice skirt4 = RaftSlice(ph, left, top, 90.0, 8);
-  skirt4.moveToStartZ();
-  skirt4.generateOuterWall();
-  
-  
-  for(int i = 0; i < no_layers; i++)
-  {
-    std::cout << "Cone Layer " << i << "\n";
-    RectangleSlice rs = RectangleSlice(ph, left, top, 30.0, 80.0);
-    rs.generateOuterWall(wall_width);
-  }
-
-  RaftSlice skirt5 = RaftSlice(ph, right, top, 90.0, 1);
-  skirt5.moveToStartZ();
-  skirt5.generateOuterWall();
-
-  wall_width = 6;
-
-  for(int i = 0; i < no_layers; i++)
-  {
-    std::cout << "Cone Layer " << i << "\n";
-    RectangleSlice rs = RectangleSlice(ph, right, top, 30.0, 80.0);
-    rs.generateOuterWall(wall_width);
-  }
-
-
-
-  wall_width = 4;
-  std::cout << "Skirt \n";
-  commands.push_back(";SKIRT\n");
-  RaftSlice skirt6 = RaftSlice(ph, left, bottom, 90.0, 1);
-  skirt6.moveToStartZ();
-  skirt6.generateOuterWall();
-  
-  
-  for(int i = 0; i < no_layers; i++)
-  {
-    std::cout << "Cone Layer " << i << "\n";
-    RectangleSlice rs = RectangleSlice(ph, left, bottom, 30.0, 80.0);
-    rs.generateOuterWall45(wall_width);
-  }
-
-  RaftSlice skirt8 = RaftSlice(ph, right, bottom, 90.0, 1);
-  skirt8.moveToStartZ();
-  skirt8.generateOuterWall();
-
-  wall_width = 6;
-
-  for(int i = 0; i < no_layers; i++)
-  {
-    std::cout << "Cone Layer " << i << "\n";
-    RectangleSlice rs = RectangleSlice(ph, right, bottom, 30.0, 80.0);
-    rs.generateOuterWall45(wall_width);
-  }
  
-
- 
-
-
-
+  rectangles();
 
 
   writeToFile();
@@ -125,4 +50,242 @@ void Gcode::writeToFile()
   appendFile(&output, "../gcode/end_gcode_um2.txt");
 
   output.close();
+}
+
+
+void Gcode::rectangles()
+{
+
+  float left = 40.0f;
+  float center_h = 115.0f;
+  float right = 180.0f;
+
+  float top = 170.0f;
+  float center_v = 115.0f;
+  float bottom = 55.0f;
+
+
+   inc_ratio = 0;
+
+  // WALL WIDTH 4
+  wall_width = 4;
+  std::cout << "Skirt \n";
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt4 = RaftSlice(ph, center_h, center_v, 90.0, 8);
+  skirt4.moveToStartZ();
+  skirt4.generateOuterWall();
+  
+  
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    RectangleSlice rs = RectangleSlice(ph, center_h, center_v,  30.0, 80.0);
+    rs.generateOuterWall45(wall_width);
+  }
+
+  //RaftSlice skirt5 = RaftSlice(ph, right, top, 90.0, 1);
+  //skirt5.moveToStartZ();
+  //skirt5.generateOuterWall();
+
+  //wall_width = 6;
+
+  //for(int i = 0; i < no_layers; i++)
+  //{
+    //std::cout << "Cone Layer " << i << "\n";
+    //RectangleSlice rs = RectangleSlice(ph, right, top, 30.0, 80.0);
+    //rs.generateOuterWall(wall_width);
+  //}
+
+
+
+  //wall_width = 4;
+  //std::cout << "Skirt \n";
+  //commands.push_back(";SKIRT\n");
+  //RaftSlice skirt6 = RaftSlice(ph, left, bottom, 90.0, 1);
+  //skirt6.moveToStartZ();
+  //skirt6.generateOuterWall();
+  
+  
+  //for(int i = 0; i < no_layers; i++)
+  //{
+    //std::cout << "Cone Layer " << i << "\n";
+    //RectangleSlice rs = RectangleSlice(ph, left, bottom, 30.0, 80.0);
+    //rs.generateOuterWall45(wall_width);
+  //}
+
+  //RaftSlice skirt8 = RaftSlice(ph, right, bottom, 90.0, 1);
+  //skirt8.moveToStartZ();
+  //skirt8.generateOuterWall();
+
+  //wall_width = 6;
+
+  //for(int i = 0; i < no_layers; i++)
+  //{
+    //std::cout << "Cone Layer " << i << "\n";
+    //RectangleSlice rs = RectangleSlice(ph, right, bottom, 30.0, 80.0);
+    //rs.generateOuterWall45(wall_width);
+  //}
+
+}
+
+void Gcode::cylinderFixes()
+{
+  float left = 40.0f;
+  float center_h = 115.0f;
+  float right = 180.0f;
+
+  float top = 170.0f;
+  float center_v = 115.0f;
+  float bottom = 55.0f;
+
+  inc_ratio = 0;
+
+  // WALL WIDTH 4
+  wall_width = 4;
+  double r = 30.0;
+  std::cout << "Skirt \n";
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt4 = RaftSlice(ph, left, top, 70.0, 8);
+  skirt4.moveToStartZ();
+  skirt4.generateOuterWall();
+
+  for(int i = 0; i < no_layers; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, left, top, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+
+
+  wall_width = 4;
+  r = 30.0;
+  std::cout << "Skirt \n";
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt5 = RaftSlice(ph, right, top, 70.0, 2);
+  skirt5.moveToStartZ();
+  skirt5.generateOuterWall();
+
+
+  inc_ratio = 0.05f;
+
+  for(int i = 0; i < 50; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, right, top, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+  //inc_ratio = 0.05f;
+
+  for(int i = 0; i < 50; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, right, top, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r - inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+
+
+  // WALL WIDTH 2
+  wall_width = 4;
+  r = 30.0;
+  std::cout << "Skirt \n";
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt = RaftSlice(ph, right, bottom, 70.0, 2);
+  skirt.moveToStartZ();
+  skirt.generateOuterWall();
+
+
+  inc_ratio = 0.01f;
+
+  for(int i = 0; i < 45; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, right, bottom, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+  for(int i = 0; i < 10; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, right, bottom, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+  
+  //inc_ratio = 0.05f;
+
+  for(int i = 0; i < 45; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, right, bottom, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r - inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+
+
+  // WALL WIDTH 2
+  wall_width = 4;
+  r = 30.0;
+  std::cout << "Skirt \n";
+  commands.push_back(";SKIRT\n");
+  RaftSlice skirt3 = RaftSlice(ph, left, bottom, 70.0, 2);
+  skirt3.moveToStartZ();
+  skirt3.generateOuterWall();
+
+
+  inc_ratio = 0.01f;
+
+  for(int i = 0; i < 50; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, left, bottom, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r + inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+  //inc_ratio = 0.05f;
+
+  for(int i = 0; i < 50; i++)
+  {
+    std::cout << "Cone Layer " << i << "\n";
+    CircleSlice cs = CircleSlice(ph, left, bottom, r, 0.06283185);
+    cs.generateOuterWall(wall_width);
+    // THIS ALSO LOOKS COOL 
+    //r = r * inc_ratio;
+    r = r - inc_ratio;
+    //std::cout << "Ratio " << r << "\n";
+  }
+
+
+
+
+
+
 }
