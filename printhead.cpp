@@ -8,11 +8,15 @@ Printhead::Printhead(std::vector<std::string>* commands)
   _x = 0.0;
   _y = 0.0;
   _x = 0.0;
-  _e = 0.0;
+  _e = 10.0;
   _commands = commands;
   //E_COEF = 0.0329;
   LAYER_HEIGHT = 0.1;
   LINE_WIDTH = 0.3;
+  std::stringstream ss;
+  ss << "G92 E0 \n";
+  std::string s = ss.str();
+  _commands->push_back(s);
 }
 
 void Printhead::extrudeXYAxisTo(float x, float y)

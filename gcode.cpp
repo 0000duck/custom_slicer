@@ -16,8 +16,8 @@ bool Gcode::generate()
 {
   std::cout << "Generating gcode...\n";
  
-  rectangles();
-
+  //rectangles();
+  cylinderFixes();
 
   writeToFile();
   return true;
@@ -140,43 +140,81 @@ void Gcode::cylinderFixes()
 
   inc_ratio = 0;
 
-  // WALL WIDTH 4
-  wall_width = 4;
+  //// WALL WIDTH 4
+  //wall_width = 4;
   double r = 30.0;
-  std::cout << "Skirt \n";
-  commands.push_back(";SKIRT\n");
-  RaftSlice skirt4 = RaftSlice(ph, left, top, 70.0, 8);
-  skirt4.moveToStartZ();
-  skirt4.generateOuterWall();
+  //std::cout << "Skirt \n";
+  //commands.push_back(";SKIRT\n");
+  //RaftSlice skirt4 = RaftSlice(ph, left, top, 70.0, 8);
+  //skirt4.moveToStartZ();
+  //skirt4.generateOuterWall();
 
-  for(int i = 0; i < no_layers; i++)
-  {
-    std::cout << "Cone Layer " << i << "\n";
-    CircleSlice cs = CircleSlice(ph, left, top, r, 0.06283185);
-    cs.generateOuterWall(wall_width);
-    // THIS ALSO LOOKS COOL 
-    //r = r * inc_ratio;
-    r = r + inc_ratio;
-    //std::cout << "Ratio " << r << "\n";
-  }
+  //for(int i = 0; i < no_layers; i++)
+  //{
+    //std::cout << "Cone Layer " << i << "\n";
+    //CircleSlice cs = CircleSlice(ph, left, top, r, 0.06283185);
+    //cs.generateOuterWall(wall_width);
+    //// THIS ALSO LOOKS COOL 
+    ////r = r * inc_ratio;
+    //r = r + inc_ratio;
+    ////std::cout << "Ratio " << r << "\n";
+  //}
 
 
 
+  //wall_width = 4;
+  //r = 30.0;
+  //std::cout << "Skirt \n";
+  //commands.push_back(";SKIRT\n");
+  //RaftSlice skirt5 = RaftSlice(ph, right, top, 70.0, 2);
+  //skirt5.moveToStartZ();
+  //skirt5.generateOuterWall();
+
+
+  //inc_ratio = 0.05f;
+
+  //for(int i = 0; i < 50; i++)
+  //{
+    //std::cout << "Cone Layer " << i << "\n";
+    //CircleSlice cs = CircleSlice(ph, right, top, r, 0.06283185);
+    //cs.generateOuterWall(wall_width);
+    //// THIS ALSO LOOKS COOL 
+    ////r = r * inc_ratio;
+    //r = r + inc_ratio;
+    ////std::cout << "Ratio " << r << "\n";
+  //}
+
+  ////inc_ratio = 0.05f;
+
+  //for(int i = 0; i < 50; i++)
+  //{
+    //std::cout << "Cone Layer " << i << "\n";
+    //CircleSlice cs = CircleSlice(ph, right, top, r, 0.06283185);
+    //cs.generateOuterWall(wall_width);
+    //// THIS ALSO LOOKS COOL 
+    ////r = r * inc_ratio;
+    //r = r - inc_ratio;
+    ////std::cout << "Ratio " << r << "\n";
+  //}
+
+
+
+  // WALL WIDTH 2
   wall_width = 4;
   r = 30.0;
   std::cout << "Skirt \n";
   commands.push_back(";SKIRT\n");
-  RaftSlice skirt5 = RaftSlice(ph, right, top, 70.0, 2);
-  skirt5.moveToStartZ();
-  skirt5.generateOuterWall();
+  RaftSlice skirt3 = RaftSlice(ph, left, top, 70.0, 8);
+  skirt3.moveToStartZ();
+  skirt3.generateOuterWall();
 
 
-  inc_ratio = 0.05f;
+  inc_ratio = 0.01f;
 
   for(int i = 0; i < 50; i++)
   {
     std::cout << "Cone Layer " << i << "\n";
-    CircleSlice cs = CircleSlice(ph, right, top, r, 0.06283185);
+    CircleSlice cs = CircleSlice(ph, left, top, r, 0.06283185);
     cs.generateOuterWall(wall_width);
     // THIS ALSO LOOKS COOL 
     //r = r * inc_ratio;
@@ -189,7 +227,7 @@ void Gcode::cylinderFixes()
   for(int i = 0; i < 50; i++)
   {
     std::cout << "Cone Layer " << i << "\n";
-    CircleSlice cs = CircleSlice(ph, right, top, r, 0.06283185);
+    CircleSlice cs = CircleSlice(ph, left, top, r, 0.06283185);
     cs.generateOuterWall(wall_width);
     // THIS ALSO LOOKS COOL 
     //r = r * inc_ratio;
@@ -198,13 +236,12 @@ void Gcode::cylinderFixes()
   }
 
 
-
   // WALL WIDTH 2
   wall_width = 4;
   r = 30.0;
   std::cout << "Skirt \n";
   commands.push_back(";SKIRT\n");
-  RaftSlice skirt = RaftSlice(ph, right, bottom, 70.0, 2);
+  RaftSlice skirt = RaftSlice(ph, right, center_v, 70.0, 12);
   skirt.moveToStartZ();
   skirt.generateOuterWall();
 
@@ -214,7 +251,7 @@ void Gcode::cylinderFixes()
   for(int i = 0; i < 45; i++)
   {
     std::cout << "Cone Layer " << i << "\n";
-    CircleSlice cs = CircleSlice(ph, right, bottom, r, 0.06283185);
+    CircleSlice cs = CircleSlice(ph, right, center_v, r, 0.06283185);
     cs.generateOuterWall(wall_width);
     // THIS ALSO LOOKS COOL 
     //r = r * inc_ratio;
@@ -225,7 +262,7 @@ void Gcode::cylinderFixes()
   for(int i = 0; i < 10; i++)
   {
     std::cout << "Cone Layer " << i << "\n";
-    CircleSlice cs = CircleSlice(ph, right, bottom, r, 0.06283185);
+    CircleSlice cs = CircleSlice(ph, right, center_v, r, 0.06283185);
     cs.generateOuterWall(wall_width);
     // THIS ALSO LOOKS COOL 
     //r = r * inc_ratio;
@@ -237,52 +274,13 @@ void Gcode::cylinderFixes()
   for(int i = 0; i < 45; i++)
   {
     std::cout << "Cone Layer " << i << "\n";
-    CircleSlice cs = CircleSlice(ph, right, bottom, r, 0.06283185);
+    CircleSlice cs = CircleSlice(ph, right, center_v, r, 0.06283185);
     cs.generateOuterWall(wall_width);
     // THIS ALSO LOOKS COOL 
     //r = r * inc_ratio;
     r = r - inc_ratio;
     //std::cout << "Ratio " << r << "\n";
   }
-
-
-
-  // WALL WIDTH 2
-  wall_width = 4;
-  r = 30.0;
-  std::cout << "Skirt \n";
-  commands.push_back(";SKIRT\n");
-  RaftSlice skirt3 = RaftSlice(ph, left, bottom, 70.0, 2);
-  skirt3.moveToStartZ();
-  skirt3.generateOuterWall();
-
-
-  inc_ratio = 0.01f;
-
-  for(int i = 0; i < 50; i++)
-  {
-    std::cout << "Cone Layer " << i << "\n";
-    CircleSlice cs = CircleSlice(ph, left, bottom, r, 0.06283185);
-    cs.generateOuterWall(wall_width);
-    // THIS ALSO LOOKS COOL 
-    //r = r * inc_ratio;
-    r = r + inc_ratio;
-    //std::cout << "Ratio " << r << "\n";
-  }
-
-  //inc_ratio = 0.05f;
-
-  for(int i = 0; i < 50; i++)
-  {
-    std::cout << "Cone Layer " << i << "\n";
-    CircleSlice cs = CircleSlice(ph, left, bottom, r, 0.06283185);
-    cs.generateOuterWall(wall_width);
-    // THIS ALSO LOOKS COOL 
-    //r = r * inc_ratio;
-    r = r - inc_ratio;
-    //std::cout << "Ratio " << r << "\n";
-  }
-
 
 
 
