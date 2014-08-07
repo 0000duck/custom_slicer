@@ -138,11 +138,11 @@ void Gcode::cylinderFixes()
   float center_v = 115.0f;
   float bottom = 55.0f;
 
-  inc_ratio = 0;
+  inc_ratio = 0.01;
 
   //// WALL WIDTH 4
   wall_width = 2;
-  double r = 30.0 + (30.0 * 0.05);
+  double r = 30.0 + (30.0 * 0.01);
   std::cout << "Skirt \n";
   commands.push_back(";SKIRT\n");
   RaftSlice skirt4 = RaftSlice(ph, center_h, center_v, 70.0, 8);
@@ -161,7 +161,7 @@ void Gcode::cylinderFixes()
   }
 
 
-  inc_ratio = 0.007;
+  inc_ratio = 0.03;
 
   for(int i = 0; i < 40; i++)
   {
@@ -173,6 +173,8 @@ void Gcode::cylinderFixes()
     r = r + inc_ratio;
     //std::cout << "Ratio " << r << "\n";
   }
+
+  inc_ratio = 0.02;
 
   for(int i = 0; i < 40; i++)
   {
